@@ -1,0 +1,13 @@
+**/.terraform/*
+*.tfstate
+*.tfstate.backup
+crash.log
+*.tfvars
+*.tfvars.json
+*.plan
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+.bfg-report/
