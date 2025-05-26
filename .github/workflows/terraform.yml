@@ -8,18 +8,13 @@ on:
 
 env:
   TF_IN_AUTOMATION: true
+  TF_VAR_aws_region: us-east-1
+  TF_VAR_azure_location: East US
 
 jobs:
   terraform:
     name: Terraform Format, Init, Plan and Apply
     runs-on: ubuntu-latest
-    env:
-      TF_VAR_aws_region: us-east-1
-      TF_VAR_azure_location: East US
-      TF_VAR_azure_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-      TF_VAR_azure_client_id: ${{ secrets.ARM_CLIENT_ID }}
-      TF_VAR_azure_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
-      TF_VAR_azure_tenant_id: ${{ secrets.ARM_TENANT_ID }}
 
     steps:
       - name: Checkout code
@@ -48,4 +43,12 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve -input=false -var-file="terraform.tfvars"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
 
