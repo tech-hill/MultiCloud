@@ -34,6 +34,10 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Write tfvars from secret
+  run: echo "${{ secrets.MULTICLOUD }}" > terraform.tfvars
+
+
       - name: Terraform Plan
         run: terraform plan -input=false
 
